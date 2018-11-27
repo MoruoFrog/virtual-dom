@@ -4,13 +4,14 @@
 
 不包含模板编译这一步
 
-- [] 确定描述UI的对象的数据结构
-- [x] virtual-dom --> 真实DOM
-- [x] diff
-- [x] patch
+- [x] 确定描述UI的对象的数据结构
+- [ ] virtual-dom --> 真实DOM
+- [ ] diff
+- [ ] patch
 
 1、确定描述UI的对象的数据结构
-- [x]构造函数
+
+- [x] 构造函数
 
 ```javascript
   view = render(mode)
@@ -29,6 +30,8 @@
 ```
 
 2、virtual dom --> real dom
-- [] props不考虑事件
-- [x] 绑定事件
-- [x] style对象语法
+使用dom api完成即可
+
+- [x] props不考虑事件
+- [ ] 绑定事件
+- [ ] style对象语法
