@@ -16,6 +16,7 @@
   <div id="app"></div>
 </body>
 <script src="../vNode.js"></script>
+<script src="../webDom.js"></script>
 <script>
   const handleClick = (e) => {
     console.log(e, 'clicked')
@@ -37,7 +38,6 @@
     ]
   )
 
-  ul.render()
-  ul.mount(document.getElementById('app'))
+  WebDom.render(ul, document.getElementById('app'))
 </script>
 </html>

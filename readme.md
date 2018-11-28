@@ -5,9 +5,10 @@
 不包含模板编译这一步
 
 - [x] 确定描述UI的对象的数据结构
-- [x] virtual-dom --> 真实DOM
 - [ ] diff
 - [ ] patch
+- [x] virtual-dom --> web DOM (web平台的render)
+- [ ] virtual dom patch --> web DOM patch
 
 1、确定描述UI的对象的数据结构
 
@@ -29,7 +30,7 @@
 }
 ```
 
-2、virtual dom --> real dom
+2、virtual dom --> web dom
 使用dom api完成即可
 
 - [x] props不考虑事件
@@ -39,3 +40,7 @@
 3、diff
 
 - [ ] diff
+
+4、patch
+
+- [ ] patch
