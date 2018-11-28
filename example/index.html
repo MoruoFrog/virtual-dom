@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .container {
+      display: inline-block;
+      box-shadow: 0 0 15px 5px #666;
+    }
+  </style>
   <title>Document</title>
 </head>
 <body>
@@ -11,12 +17,25 @@
 </body>
 <script src="../vNode.js"></script>
 <script>
-  const li = (text, color) => new VNode('li', { style: `color: ${color}`}, [text])
-  const ul = new VNode('ul', null, [
-    li('列表项1', 'blue'),
-    li('列表项2', 'pink'),
-    li('列表项3', 'blueviolet'),
-  ])
+  const handleClick = (e) => {
+    console.log(e, 'clicked')
+  }
+
+  const li = (text, color) => new VNode(
+    'li',
+    { style: { color }, },
+    [text]
+  )
+
+  const ul = new VNode(
+    'ul',
+    { onClick: handleClick, className: 'container' },
+    [
+      li('列表项1', 'blue'),
+      li('列表项2', 'pink'),
+      li('列表项3', 'blueviolet'),
+    ]
+  )
 
   ul.render()
   ul.mount(document.getElementById('app'))

@@ -5,7 +5,7 @@
 不包含模板编译这一步
 
 - [x] 确定描述UI的对象的数据结构
-- [ ] virtual-dom --> 真实DOM
+- [x] virtual-dom --> 真实DOM
 - [ ] diff
 - [ ] patch
 
@@ -33,5 +33,9 @@
 使用dom api完成即可
 
 - [x] props不考虑事件
-- [ ] 绑定事件
-- [ ] style对象语法
+- [X] 绑定事件
+- [x] style对象语法，class
+
+3、diff
+
+- [ ] diff
