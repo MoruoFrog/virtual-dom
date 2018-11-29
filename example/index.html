@@ -14,9 +14,11 @@
 </head>
 <body>
   <div id="app">
-    <button onclick="checkPatch()">patch</button>
   </div>
+  <button onclick="checkPatchInsert()">patchInsert</button>
+  <button onclick="checkPatchDelete()">patchRemove</button>
 </body>
+<script src="../utils.js"></script>
 <script src="../vNode.js"></script>
 <script src="../webDom.js"></script>
 <script src="../diff.js"></script>
@@ -46,17 +48,31 @@
 
   const ul2 = new VNode(
     'ul',
-    { className: 'container__' },
+    { onClick: handleClick, className: 'container__' },
     [
-      li('列表项1', 'blue'),
+      li('text', 'blue'),
       new VNode('div', {}, ['replace']),
       li('列表项3', 'red'),
       li('insert', 'red'),
     ]
   )
 
-  const checkPatch = () => {
+  const ul3 = new VNode(
+    'ul',
+    { onClick: handleClick, className: 'container__' },
+    [
+      li('text', 'blueviolet'),
+      new VNode('div', {}, ['replace']),
+    ]
+  )
+
+  const checkPatchInsert = () => {
     const dif = diffTree(ul, ul2)
+    patch(dif, document.querySelector('.container'))
+  }
+
+  checkPatchDelete = () => {
+    const dif = diffTree(ul, ul3)
     patch(dif, document.querySelector('.container'))
   }
 </script>

@@ -35,11 +35,11 @@
 
 - [x] props不考虑事件
 - [X] 绑定事件
-- [ ] style对象语法，class
+- [x] style对象语法，class
 
 3、diff
 
-- [x] diff, style是对象，有点麻烦，先不做对对style的diff。
+- [x] diff, style是对象，有点麻烦
 
 4、patch
 

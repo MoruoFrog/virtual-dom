@@ -6,7 +6,6 @@ const TEXT = 5
 
 /**
  * diff 两个VNode之间的差异并返回，不递归diff子节点
- * vNode和doom一一对应，vNode有realDom属性(除了textNode)
  * @param {VNode} oldNode 
  * @param {VNode} newNode 
  */
@@ -33,7 +32,32 @@ const diffNode = (oldNode, newNode) => {
     .filter(prop => !prop.startsWith('on'))
     .forEach(key => {
       if (oldProps.hasOwnProperty(key)) {
-        if (key !== 'style' && oldProps[key] !== newProps[key]) {
+        // 对于style特殊处理
+        if (key === 'style') {
+          const oldStyle = oldProps.style
+          const newStyle = newProps.style
+          const styleDiff = {}
+
+          forOwn(newStyle, (key, value) => {
+            if (oldStyle.hasOwnProperty(key)) {
+              if (oldStyle[key] !== value) {
+                styleDiff[key] = [REPLACE, value]
+              }
+            } else {
+              styleDiff[key] = [INSERT, value]
+            }
+          })
+
+          forOwn(oldStyle, (key, value) => {
+            if (!newStyle.hasOwnProperty(key)) {
+              styleDiff[key] = [REMOVE]
+            }
+          })
+          
+          if (!isEmptyObject(styleDiff)) {
+            propsDiff.style = styleDiff
+          }
+        } else if(oldProps[key] !== newProps[key]) {
           propsDiff[key] = [REPLACE, newProps[key]]
         }
       } else {

@@ -12,13 +12,11 @@ const patch = (difference = [], target) => {
     diff.forEach(([action, modifier]) => {
       if (action === REMOVE) {
         node.parentNode.removeChild(node)
-        return
       }
 
       if (action === REPLACE) {
         const newNode = WebDom.render(modifier)
         node.parentNode.replaceChild(newNode, node)
-        return // 替换，删除后不需要遍历子节点
       }
 
       if (action === TEXT) {
@@ -27,9 +25,17 @@ const patch = (difference = [], target) => {
 
       if (action === PROPS) {
         Object.keys(modifier).forEach(prop => {
-          const [action, value] = modifier[prop]
-          if (action === REMOVE) node.removeAttribute(prop)
-          if (action === INSERT || action === REPLACE) node.setAttribute(prop, value)
+          if (prop === 'style') {
+            forOwn(modifier[prop], (key, ob) => {
+              const [_action, value] = ob
+              if (_action === REMOVE) node.style.removeProperty(key)
+              if (_action === INSERT || _action === REPLACE) node.style[key] = value
+            })
+          } else {
+            const [_action, value] = modifier[prop]
+            if (_action === REMOVE) node.removeAttribute(prop)
+            if (_action === INSERT || _action === REPLACE) node.setAttribute(prop, value)
+          }
         })
       }
 
@@ -39,6 +45,10 @@ const patch = (difference = [], target) => {
       }
     })
 
+    // 插入，删除不用遍历子节点
+    if (diff[0] && [REPLACE, REMOVE].includes(diff[0][0])) {
+      return
+    }
     node.childNodes.forEach(childNode => dfs(childNode))
   }
 

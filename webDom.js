@@ -1,32 +1,5 @@
 const WebDom = {}
 
-// 分离attributes和events
-const groupProps = function(vNode) {
-  const props = vNode.props
-  const events = []
-  const attributes = []
-
-  Object.keys(props).forEach(key => {
-    if (key.startsWith('on')) {
-      const eventName = key.slice(2).toLowerCase()
-      const eventHandler = props[key]
-
-      if (events[eventName]) {
-        events[eventName].push(eventHandler)
-      } else {
-        events[eventName] = [eventHandler]
-      }
-    } else {
-      attributes[key] = props[key]
-    }
-  })
-
-  return {
-    events,
-    attributes,
-  }
-}
-
 WebDom.render = function(vNode, target) {
   const { name, children } = vNode
   const { events, attributes } = groupProps(vNode)
