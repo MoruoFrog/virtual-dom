@@ -52,12 +52,14 @@ const diffNode = (oldNode, newNode) => {
 
 const diffTree = (oldTree, newTree) => {
   const result = []
+  let path = 0
 
   // 同步dfs两个树，需要注意保持同步
   // 已经有过经验了，递归dfs快于手动堆栈
   const dfsDiff = (tree1, tree2) => {
+    path++
     const differenec = diffNode(tree1, tree2)
-    if (differenec) result.push(differenec)
+    if (differenec) result.push([path, ...differenec])
 
     const diffType = differenec[0]
     // 如果是替换或者文本节点，不用递归往下
@@ -69,12 +71,13 @@ const diffTree = (oldTree, newTree) => {
     for(let i = 0; i < maxChildCount; i++) {
       // 插入
       if (i > children1.length - 1) {
-        result.push([INSERT, children2[i]])
+        result.push([count, INSERT, children2[i]])
         continue
       }
       // 删除
       if (i > children2.length - 1) {
-        result.push([REMOVE, children1[i]])
+        path++
+        result.push([path, REMOVE, children1[i]])
         continue
       }
 
