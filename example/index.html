@@ -13,11 +13,14 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <button onclick="checkPatch()">patch</button>
+  </div>
 </body>
 <script src="../vNode.js"></script>
 <script src="../webDom.js"></script>
 <script src="../diff.js"></script>
+<script src="../patch.js"></script>
 <script>
   const handleClick = (e) => {
     console.log(e, 'clicked')
@@ -40,5 +43,21 @@
   )
 
   WebDom.render(ul, document.getElementById('app'))
+
+  const ul2 = new VNode(
+    'ul',
+    { className: 'container__' },
+    [
+      li('列表项1', 'blue'),
+      new VNode('div', {}, ['replace']),
+      li('列表项3', 'red'),
+      li('insert', 'red'),
+    ]
+  )
+
+  const checkPatch = () => {
+    const dif = diffTree(ul, ul2)
+    patch(dif, document.querySelector('.container'))
+  }
 </script>
 </html>

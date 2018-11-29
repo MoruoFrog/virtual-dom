@@ -58,6 +58,7 @@ const diffTree = (oldTree, newTree) => {
   // 已经有过经验了，递归dfs快于手动堆栈
   const dfsDiff = (tree1, tree2) => {
     path++
+    const rootPath = path
     const differenec = diffNode(tree1, tree2)
     if (differenec) result.push([path, ...differenec])
 
@@ -71,7 +72,8 @@ const diffTree = (oldTree, newTree) => {
     for(let i = 0; i < maxChildCount; i++) {
       // 插入
       if (i > children1.length - 1) {
-        result.push([count, INSERT, children2[i]])
+        // 注意插入这里要使用父节点的path
+        result.push([rootPath, INSERT, children2[i]])
         continue
       }
       // 删除
