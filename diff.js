@@ -30,7 +30,7 @@ const diffNode = (oldNode, newNode) => {
   // 插入和修改prop
   Object.keys(newProps).forEach(key => {
     if (oldProps.hasOwnProperty(key)) {
-      if (oldProps[key] !== newProps[key]) {
+      if (key !== 'style' && oldProps[key] !== newProps[key]) {
         propsDiff[key] = [REPLACE, newProps[key]]
       }
     } else {
