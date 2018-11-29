@@ -27,23 +27,28 @@ const diffNode = (oldNode, newNode) => {
   const oldProps = oldNode.props
   const newProps = newNode.props
 
+  // 认为事件绑定函数不会改变
   // 插入和修改prop
-  Object.keys(newProps).forEach(key => {
-    if (oldProps.hasOwnProperty(key)) {
-      if (key !== 'style' && oldProps[key] !== newProps[key]) {
-        propsDiff[key] = [REPLACE, newProps[key]]
+  Object.keys(newProps)
+    .filter(prop => !prop.startsWith('on'))
+    .forEach(key => {
+      if (oldProps.hasOwnProperty(key)) {
+        if (key !== 'style' && oldProps[key] !== newProps[key]) {
+          propsDiff[key] = [REPLACE, newProps[key]]
+        }
+      } else {
+        propsDiff[key] = [INSERT, newProps[key]]
       }
-    } else {
-      propsDiff[key] = [INSERT, newProps[key]]
-    }
-  })
+    })
 
   // 删除prop
-  Object.keys(oldProps).forEach(key => {
-    if (!newProps.hasOwnProperty(key)) {
-      propsDiff[key] = [REMOVE]
-    }
-  })
+  Object.keys(oldProps)
+    .filter(prop => !prop.startsWith('on'))
+    .forEach(key => {
+      if (!newProps.hasOwnProperty(key)) {
+        propsDiff[key] = [REMOVE]
+      }
+    })
 
   if (Object.keys(propsDiff).length === 0) return false
 
