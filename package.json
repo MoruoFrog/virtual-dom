@@ -1,8 +1,0 @@
-{
-  "name": "virtual-dom",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:MoruoFrog/virtual-dom.git",
-  "author": "moruo <734733711@qq.com>",
-  "license": "MIT"
-}
