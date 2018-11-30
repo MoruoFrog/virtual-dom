@@ -61,7 +61,12 @@ const patch = (difference = [], target) => {
     if (diff[0] && [REPLACE, REMOVE].includes(diff[0][0])) {
       return
     }
-    node.childNodes.forEach(childNode => dfs(childNode))
+
+    // 这里一定要copy一份，否则会影响遍历的路径，因为可能会删除节点
+    const childNodes = [...node.childNodes]
+    for(let i = 0; i < childNodes.length; i++) {
+      dfs(childNodes[i])
+    }
   }
 
   dfs(target)
