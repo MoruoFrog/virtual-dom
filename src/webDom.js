@@ -1,3 +1,6 @@
+import { groupProps } from './utils'
+import VNode from './vNode'
+
 const WebDom = {}
 
 WebDom.render = function(vNode, target) {
@@ -40,3 +43,5 @@ WebDom.render = function(vNode, target) {
   target && target.appendChild(elm)
   return elm
 }
+
+export default WebDom

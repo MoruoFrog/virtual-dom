@@ -1,8 +1,16 @@
-const REMOVE = 1
-const PROPS = 2
-const REPLACE = 3
-const INSERT = 4
-const TEXT = 5
+import diffType from './const'
+import {
+  forOwn,
+  isEmptyObject,
+} from './utils'
+
+const {
+  REMOVE,
+  REPLACE,
+  INSERT,
+  TEXT,
+  PROPS,
+} = diffType
 
 /**
  * diff 两个VNode之间的差异并返回，不递归diff子节点
@@ -76,7 +84,7 @@ const diffNode = (oldNode, newNode) => {
 
   if (Object.keys(propsDiff).length === 0) return false
 
-  return [2, propsDiff]
+  return [PROPS, propsDiff]
 }
 
 const diffTree = (oldTree, newTree) => {
@@ -120,3 +128,5 @@ const diffTree = (oldTree, newTree) => {
 
   return result
 }
+
+export default diffTree

@@ -12,3 +12,6 @@ function VNode(name, props, children) {
   this.uid = uid++
   this.patches = []
 }
+
+
+export default VNode

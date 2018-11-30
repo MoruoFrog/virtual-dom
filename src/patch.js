@@ -1,3 +1,15 @@
+import diffType from './const'
+import { forOwn } from './utils'
+import WebDom from './webDom'
+
+const {
+  REMOVE,
+  REPLACE,
+  INSERT,
+  TEXT,
+  PROPS,
+} = diffType
+
 const patch = (difference = [], target) => {
   if (!target) {
     throw new Error('target is required')
@@ -55,3 +67,5 @@ const patch = (difference = [], target) => {
   dfs(target)
   actions.forEach(action => action())
 }
+
+export default patch

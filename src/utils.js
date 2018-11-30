@@ -1,11 +1,11 @@
-const forOwn = (obj, fn) => {
+export const forOwn = (obj, fn) => {
   Object.keys(obj).forEach(key => fn(key, obj[key]))
 }
 
-const isEmptyObject = obj => Object.keys(obj).length === 0
+export const isEmptyObject = obj => Object.keys(obj).length === 0
 
 // 分离attributes和events
-const groupProps = function(vNode) {
+export const groupProps = function(vNode) {
   const props = vNode.props
   const events = []
   const attributes = []
