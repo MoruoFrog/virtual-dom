@@ -1,4 +1,4 @@
-import { groupProps } from './utils'
+import { groupProps, forOwn } from './utils'
 import VNode from './vNode'
 
 const WebDom = {}
@@ -9,22 +9,18 @@ WebDom.render = function(vNode, target) {
   const elm = document.createElement(name)
 
   // 添加属性
-  Object.keys(attributes).forEach(key => {
-    const prop = attributes[key]
-
+  forOwn(attributes, (key, val) => {
     if (key === 'style') {
-      Object.assign(elm.style, prop)
+      Object.assign(elm.style, val)
     } else if(key === 'className'){
-      elm.className = prop
+      elm.className = val
     } else {
-      elm.setAttribute(key, prop)
+      elm.setAttribute(key, val)
     }
   })
 
   // 添加事件
-  Object.keys(events).forEach(eventName => {
-    const handlers = events[eventName]
-
+  forOwn(events, (eventName, handlers) => {
     handlers.forEach(handler => elm.addEventListener(eventName, handler))
   })
 

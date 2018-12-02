@@ -82,7 +82,7 @@ const diffNode = (oldNode, newNode) => {
       }
     })
 
-  if (Object.keys(propsDiff).length === 0) return false
+  if (isEmptyObject(propsDiff)) return false
 
   return [PROPS, propsDiff]
 }

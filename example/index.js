@@ -55,7 +55,6 @@ const checkPatchInsert = () => {
 
 const checkPatchDelete = () => {
   const patches = diff(currentVnode, ul3)
-  console.log(patches)
   patch(patches, document.querySelector('.container'))
   currentVnode = ul3
 }

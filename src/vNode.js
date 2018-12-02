@@ -10,7 +10,6 @@ function VNode(name, props, children) {
   this.props = props || {}
   this.children = children || []
   this.uid = uid++
-  this.patches = []
 }
 
 

@@ -14,6 +14,7 @@ const patch = (difference = [], target) => {
   if (!target) {
     throw new Error('target is required')
   }
+  
   let path = 0
   const actions = []
 
@@ -36,15 +37,15 @@ const patch = (difference = [], target) => {
       }
 
       if (action === PROPS) {
-        Object.keys(modifier).forEach(prop => {
+        forOwn(modifier, (prop, propModifier) => {
           if (prop === 'style') {
-            forOwn(modifier[prop], (key, ob) => {
+            forOwn(propModifier, (key, ob) => {
               const [_action, value] = ob
               if (_action === REMOVE) node.style.removeProperty(key)
               if (_action === INSERT || _action === REPLACE) node.style[key] = value
             })
           } else {
-            const [_action, value] = modifier[prop]
+            const [_action, value] = propModifier
             if (_action === REMOVE) node.removeAttribute(prop)
             if (_action === INSERT || _action === REPLACE) node.setAttribute(prop, value)
           }
