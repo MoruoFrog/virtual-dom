@@ -29,9 +29,9 @@ const ul2 = new VNode(
   'ul',
   { onClick: handleClick, className: 'container__' },
   [
-    li('text', 'blue'),
+    li('text', 'red'),
     new VNode('div', {}, ['replace']),
-    li('列表项3', 'red'),
+    'text-node',
     li('insert', 'red'),
   ]
 )
