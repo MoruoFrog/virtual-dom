@@ -4,6 +4,10 @@ import VNode from './vNode'
 const WebDom = {}
 
 WebDom.render = function(vNode, target) {
+  if (typeof vNode === 'string') {
+    return document.createTextNode(vNode)
+  }
+
   const { name, children } = vNode
   const { events, attributes } = groupProps(vNode)
   const elm = document.createElement(name)
