@@ -14,8 +14,6 @@ const {
 
 /**
  * diff 两个VNode之间的差异并返回，不递归diff子节点
- * @param {VNode} oldNode 
- * @param {VNode} newNode 
  */
 const diffNode = (oldNode, newNode) => {
   if (typeof oldNode === 'string' && typeof newNode === 'string'){

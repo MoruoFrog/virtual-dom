@@ -14,6 +14,7 @@ const patch = (difference = [], target) => {
   if (!target) {
     throw new Error('target is required')
   }
+  if (!Array.isArray(difference)) throw new Error('difference must be array')
   
   let path = 0
   const actions = []
@@ -23,38 +24,40 @@ const patch = (difference = [], target) => {
     const diff = difference.filter(([_path]) => path === _path).map(([p, action, modifier]) => [action, modifier])
 
     diff.forEach(([action, modifier]) => {
-      if (action === REMOVE) {
-        node.parentNode.removeChild(node)
-      }
+      switch (action) {
+        case REMOVE:
+          node.parentNode.removeChild(node)
+          break
 
-      if (action === REPLACE) {
-        const newNode = WebDom.render(modifier)
-        node.parentNode.replaceChild(newNode, node)
-      }
+        case REPLACE:
+          const newNode = WebDom.render(modifier)
+          node.parentNode.replaceChild(newNode, node)
+          break
 
-      if (action === TEXT) {
-        node.textContent = modifier
-      }
+        case TEXT:
+          node.textContent = modifier
+          break
 
-      if (action === PROPS) {
-        forOwn(modifier, (prop, propModifier) => {
-          if (prop === 'style') {
-            forOwn(propModifier, (key, ob) => {
-              const [_action, value] = ob
-              if (_action === REMOVE) node.style.removeProperty(key)
-              if (_action === INSERT || _action === REPLACE) node.style[key] = value
-            })
-          } else {
-            const [_action, value] = propModifier
-            if (_action === REMOVE) node.removeAttribute(prop)
-            if (_action === INSERT || _action === REPLACE) node.setAttribute(prop, value)
-          }
-        })
-      }
+        case PROPS:
+          forOwn(modifier, (prop, propModifier) => {
+            if (prop === 'style') {
+              forOwn(propModifier, (key, ob) => {
+                const [_action, value] = ob
+                if (_action === REMOVE) node.style.removeProperty(key)
+                if (_action === INSERT || _action === REPLACE) node.style[key] = value
+              })
+            } else {
+              const [_action, value] = propModifier
+              if (_action === REMOVE) node.removeAttribute(prop)
+              if (_action === INSERT || _action === REPLACE) node.setAttribute(prop, value)
+            }
+          })
+          break
 
-      // 插入会影响后续的遍历，放入actions，遍历之后统一插入
-      if (action === INSERT) {
-        actions.push(() => node.appendChild(WebDom.render(modifier)))
+        // 插入会影响后续的遍历，放入actions，遍历之后统一插入
+        case INSERT:
+          actions.push(() => node.appendChild(WebDom.render(modifier)))
+          break
       }
     })
 
